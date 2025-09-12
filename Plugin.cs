@@ -401,12 +401,30 @@ public static class Patches {
       //do something in 4-1 (pool of water beginning, lava later)
       //do something in 4-3 pool of water
       //4-4 chamber of the feline and the rodent
+      case "Level 4-2":
+        for (int i = 0; i < 7; i++) {
+          WaterBuilder.SetWater("Dunes", i)
+            .AddFish("Coin")
+            .SetUp("Sand", Color.yellow);
+        }
+        break;
+      case "Level 4-3":
+        WaterBuilder.SetWater("3 - Traitor Hallway/3B - Tomb of Kings/3B Nonstuff/Entrance/Walls/Cube (99)")
+          .AddFish("Coin")
+          .SetUp("Gold", Color.yellow);
+        WaterBuilder.SetWater("3 - Traitor Hallway/3B - Tomb of Kings/3B Nonstuff/Entrance/Walls/Cube (100)")
+          .AddFish("Coin")
+          .SetUp("Gold", Color.yellow);
+        break;
       case "Level 4-4":
         WaterBuilder.CreateWater("8 - Outro/8 Stuff/Landing (Broken) (1)")
           .SetPosition(1065, 255, 692)
           .SetLocalScale(9, 0, 9)
           .AddFish("Eyeball")
           .SetUp("\"V2\"", Color.red);
+        WaterBuilder.SetWater("8 - Outro/8 Nonstuff/Untilted (Outro)/Cube(Clone) (1)/")
+          .AddFish("Coin")
+          .SetUp("Sand", Color.yellow);
         break;
       case "Level 5-1":
         WaterBuilder.SetWater("Underwaters/All Waters/Cube (3)") 
