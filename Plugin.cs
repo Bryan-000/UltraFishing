@@ -77,6 +77,61 @@ public static class Patches {
   }
   
   [HarmonyPrefix]
+  [HarmonyPatch(typeof(FishingRodWeapon), "Awake")]
+  private static bool FishingRodWeapon_Awake_Prefix(FishingRodWeapon __instance) {
+    if (__instance is NewFishingRod) {
+      return true;
+    }
+
+    FishingRodWeapon rod = __instance;
+    GameObject gameObject = rod.gameObject;
+    gameObject.SetActive(false);
+    NewFishingRod newRod = gameObject.AddComponent<NewFishingRod>();
+
+    newRod.animator = rod.animator;
+    newRod.targetPrefab = rod.targetPrefab;
+    newRod.baitPrefab = rod.baitPrefab;
+    newRod.rodTip = rod.rodTip;
+    newRod.fishPickupTemplate = rod.fishPickupTemplate;
+    newRod.pullSound = rod.pullSound;
+    newRod.targetingCircle = rod.targetingCircle;
+    newRod.spawnedBaitCon = rod.spawnedBaitCon;
+    newRod.state = rod.state;
+    newRod.selectedPower = rod.selectedPower;
+    newRod.climaxed = rod.climaxed;
+    newRod.baitThrown = rod.baitThrown;
+    newRod.distanceAfterThrow = rod.distanceAfterThrow;
+    newRod.fishHooked = rod.fishHooked;
+    newRod.currentFishPool = rod.currentFishPool;
+    newRod.currentWater = rod.currentWater;
+    newRod.hookedFishe = rod.hookedFishe;
+    newRod.fishTolerance = rod.fishTolerance;
+    newRod.fishDesirePosition = rod.fishDesirePosition;
+    newRod.playerProvidedPosition = rod.playerProvidedPosition;
+    newRod.playerPositionVelocity = rod.playerPositionVelocity;
+    newRod.timeSinceBaitInWater = rod.timeSinceBaitInWater;
+    newRod.timeSinceAction = rod.timeSinceAction;
+    newRod.noFishErrorDisplayed = rod.noFishErrorDisplayed;
+    gameObject.GetComponentInChildren<FishingRodAnimEvents>().weapon = newRod;
+
+    Object.Destroy(rod);
+    gameObject.SetActive(true);
+
+    return false;
+  }
+
+  [HarmonyPrefix]
+  [HarmonyPatch(typeof(FishingRodWeapon), "Update")]
+  private static bool FishingRodWeapon_Update_Prefix(FishingRodWeapon __instance) {
+    if (__instance is NewFishingRod) {
+      NewFishingRod newRod = (NewFishingRod)__instance;
+      newRod.NewUpdate();
+      return false;
+    }
+    return true;
+  }
+
+  [HarmonyPrefix]
   [HarmonyPatch(typeof(FishEncyclopedia), "Start")]
   private static bool FishEncyclopedia_Start_Prefix(FishEncyclopedia __instance) {
     if (__instance is GlobalFishEncyclopedia) {
