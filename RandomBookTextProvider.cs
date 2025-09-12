@@ -23,13 +23,13 @@ public static class RandomBookTextProvider {
 
   private static string creditsText = 
 """"
-Congratulations on finding the secret <color=cyan>ULTRAFISHING</color> credits book! 
+Congratulations on finding the secret <color=blue>ULTRAFISHING</color> credits book! 
 
 Someone told me it'd be cool to have something like this in the dev museum, so thanks for the idea.
 
 If anyone other than me ends up making major contributions to the mod, I will credit them here.
 
-<b><color=orange>earthling on fire</color> - CREATOR OF <color=cyan>ULTRAFISHING</color></b>
+<b><color=orange>earthling on fire</color> - CREATOR OF <color=blue>ULTRAFISHING</color></b>
 
 This mod took a very long time to make, and development went on hiatus multiple times. But somehow, I managed to finish it.
 
@@ -46,6 +46,8 @@ My contributions include:
 <b>SPECIAL THANKS</b>
 
 COOL PEOPLE ON DISCORD - advice, feedback and suggestions
+
+Poot Man - playtesting
 
 PITR - really robust fishing code that was surprisingly easy to work with
 
