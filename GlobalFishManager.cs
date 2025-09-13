@@ -131,7 +131,7 @@ Usually found where the water falls.
 """";
       case "\"size 2\"":
         return """"
-The legendary fish. The dream of all fishers, yet none have ever caught it. It is said to only appear to the wise.
+The legendary fish. The dream of all fishers, yet none have ever caught it. It is said to only appear to expert fishers who have caught every kind of fish.
 
 The waterfall conceals the water UPS. Agnes Gorge Trail. Use your ability and fulfill your destiny.
 """";
