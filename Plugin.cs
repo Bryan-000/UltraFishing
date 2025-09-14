@@ -344,7 +344,12 @@ public static class Patches {
         WaterBuilder.SetWater("6 - Waterfall Arena/6 Nonstuff/Cliff and Waterfall", 2, "GameObject")
           .AddFish("null")
           .SetUp("Waterfall", Color.magenta);
-        WaterBuilder.SetWater("1 - First Field/1 Stuff/Fountain/Cylinder") // works but not after coin
+        // shitty fix for deltakill compat
+        GameObject fountain = GenericHelper.FindGameObject("1 - First Field/1 Stuff/1 - Darker_Fountain(Clone)/fountain/Cylinder (1)");
+        if (fountain == null) { 
+          fountain = GenericHelper.FindGameObject("1 - First Field/1 Stuff/Fountain/Cylinder"); // works but not after coin
+        }
+        WaterBuilder.SetWater(fountain) 
           .AddFish("Coin")
           .SetUp("Fountain", Color.cyan);
         break;
