@@ -352,23 +352,20 @@ Found in the deepest, darkest depths of libraries.
 """"
 <b>EXCERPT FROM THE SCRIPT OF A FAMOUS MOVIE</b>
 
+
 (Black screen with text; The sound of an electric railcannon can be heard) 
-According to all known laws of aviation, 
 
 
-there is no way a V model machine 
-should be able to fly. 
+According to all known laws of aviation, there is no way a V model machine should be able to fly. 
 
 
-Its wings are too small to get 
-its fat metal body off the ground. 
+Its wings are too small to get its fat metal body off the ground. 
 
 
-The machine, of course, slam storages anyway 
+The machine, of course, slam storages anyway...
 
 
-because machines don't care what humans think is impossible. 
-
+Because machines don't care what humans think is impossible. 
 """",
 """"
 If you can read this, <b>PLEASE</b> pay attention. The size 2 fish is a lie. A fabrication. <b>A trap.</b>
@@ -455,7 +452,7 @@ Did you hear about the machine who tried to pump their <b>PUMP CHARGE SHOTGUN</b
 "believe it or not that happened about 5 minutes ago when you were posting about licking your phone screen in a completely unrelated channel in the middle of an actual indepth conversation"
 
 
-"adding "the ferryman's head has a vertex that's too pointy" to the list of definitely not completely insane requests"
+"adding 'the ferryman's head has a vertex that's too pointy' to the list of definitely not completely insane requests"
 
 
 "yeah well git gud asshole"
@@ -471,6 +468,9 @@ Did you hear about the machine who tried to pump their <b>PUMP CHARGE SHOTGUN</b
 
 
 "first name cum, second name cision, title sir"
+
+
+"why didnt this hotfix add a boulder for sisyphus? he's a boulder guy right? he's the guy with the boulder? why doesnt he have a boulder? i thought his whole thing was that he's a boulder. i was hoping to fight boulder feat sisyphus.... where's the boulder?"
 """",
   };
 }

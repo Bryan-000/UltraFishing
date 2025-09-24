@@ -164,6 +164,7 @@ public class WaterBuilder {
 
   public WaterBuilder AddBait(string baitPath, string fish) {
     GameObject bait = GenericHelper.FindGameObject(baitPath);
+
     FishObject fishObject = FishHelper.GetFish(fish);
     BaitItem baitItem = bait.GetComponent<BaitItem>();
 
@@ -171,9 +172,7 @@ public class WaterBuilder {
       baitItem = bait.AddComponent<BaitItem>();
     }
 
-    string baitConsumedPrefab = "Assets/Particles/SoundBubbles/Bait Consumed Sound.prefab";
-    baitItem.consumedPrefab = AssetHelper.LoadPrefab(baitConsumedPrefab);
-
+    baitItem.consumedPrefab = Plugin.baitConsumedSound;
     baitItem.attractFish = GenericHelper.AppendToArray(baitItem.attractFish, fishObject);
     baitItem.supportedWaters = GenericHelper.AppendToArray(baitItem.supportedWaters, fishDB);
 

@@ -19,6 +19,10 @@ public class Plugin : BaseUnityPlugin {
   public static ManualLogSource logger;
   public static string modDir;
 
+  public static GameObject fishingRod;
+  public static GameObject fishingCanvas;
+  public static GameObject baitConsumedSound;
+
   private void Awake() {
     gameObject.hideFlags = HideFlags.HideAndDontSave;
     Plugin.logger = Logger;
@@ -27,9 +31,14 @@ public class Plugin : BaseUnityPlugin {
   private void Start() {
     string modPath = Assembly.GetExecutingAssembly().Location.ToString();
     modDir = Path.GetDirectoryName(modPath);
+
     LoadBundle();
+    LoadAssets();
+
     GlobalFishManager.Start();
+
     new Harmony(PLUGIN_GUID).PatchAll();
+
     Plugin.logger.LogInfo($"Plugin {PLUGIN_GUID} is loaded!");
   }
 
@@ -38,6 +47,17 @@ public class Plugin : BaseUnityPlugin {
     bundle = AssetBundle.LoadFromFile(bundlePath);
     if (bundle == null) {
       Plugin.logger.LogError("Bundle could not be loaded");
+    }
+  }
+
+  private void LoadAssets() {
+    fishingCanvas = AssetHelper.LoadPrefab("Assets/Prefabs/UI/FishingCanvas.prefab");
+    fishingRod = AssetHelper.LoadPrefab("Assets/Prefabs/Fishing/Fishing Rod Weapon.prefab");
+    baitConsumedSound = AssetHelper.LoadPrefab("Assets/Particles/SoundBubbles/Bait Consumed Sound.prefab");
+
+    if (bundle != null) {
+      WeaponIcon rodIcon = fishingRod.AddComponent<WeaponIcon>();
+      rodIcon.weaponDescriptor = Plugin.bundle.LoadAsset<WeaponDescriptor>("assets/bundles/fishingstuff/rod descriptor.asset");
     }
   }
 }
@@ -57,15 +77,9 @@ public static class Patches {
 
     SetupWaters();
 
-    GameObject fishingCanvas = AssetHelper.LoadPrefab("Assets/Prefabs/UI/FishingCanvas.prefab");
-    GameObject fishingCanvasClone = Object.Instantiate(fishingCanvas);
-
-    GameObject rodWeapon = AssetHelper.LoadPrefab("Assets/Prefabs/Fishing/Fishing Rod Weapon.prefab");
-    WeaponIcon rodIcon = rodWeapon.AddComponent<WeaponIcon>();
-    
-    rodIcon.weaponDescriptor = Plugin.bundle.LoadAsset<WeaponDescriptor>("assets/bundles/fishingstuff/rod descriptor.asset");
+    GameObject fishingCanvasClone = Object.Instantiate(Plugin.fishingCanvas);
    
-    AddWeapon(5, rodWeapon);
+    AddWeapon(5, Plugin.fishingRod);
 
     LoadFishTerminal();
   }
@@ -457,7 +471,7 @@ public static class Patches {
           .SetUp("Cave Lake", Color.cyan);
         break;
       case "Level 5-2":
-        WaterBuilder.SetWater("Sea/Sea Itself/Filler/WaterTrigger") //sometimes doesn't work
+        WaterBuilder.SetWater("Sea/Sea Itself/Filler/WaterTrigger") 
           .AddFish("Nerd Shark", 0)
           .AddBait("3 - Ferryman's Cabin/3 Nonstuff/Interior/Book with Stand/Book", "Nerd Shark")
           .SetUp("The Ocean Styx", Color.blue);
