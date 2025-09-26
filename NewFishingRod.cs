@@ -10,6 +10,69 @@ public class NewFishingRod : FishingRodWeapon {
     FishingHUD.Instance.SetState(FishingRodState.ReadyToThrow);
   }
 
+  public new void FishCaughtAndGrabbed() {
+		animator.SetTrigger(Idle);
+		FishingHUD.Instance.ShowFishCaught(show: true, hookedFishe.fish);
+		NewFishingRod.CreateFishPickup(fishPickupTemplate, hookedFishe.fish, grab: true);
+		ResetFishing();
+  }
+
+	public static new GameObject CreateFishPickup(ItemIdentifier template, FishObject fish, bool grab, bool unlock = true) {
+    if (unlock) {
+      FishManager.Instance.UnlockFish(fish);
+    }
+
+    ItemIdentifier itemIdentifier;
+    if (fish.customPickup != null) {
+      itemIdentifier = Object.Instantiate(fish.customPickup);
+      if (!itemIdentifier.GetComponent<FishObjectReference>()) {
+        itemIdentifier.gameObject.AddComponent<FishObjectReference>().fishObject = fish;
+      }
+    }
+    else {
+      itemIdentifier = Object.Instantiate(template);
+      itemIdentifier.gameObject.AddComponent<FishObjectReference>().fishObject = fish;
+      Transform obj = itemIdentifier.transform.GetChild(0).transform;
+      Vector3 localPosition = obj.localPosition;
+      Quaternion localRotation = obj.localRotation;
+      Vector3 localScale = obj.localScale;
+      Object.Destroy(obj.gameObject);
+      GameObject obj2 = fish.InstantiateDumb();
+      obj2.transform.SetParent(itemIdentifier.transform);
+      obj2.transform.localPosition = localPosition;
+      obj2.transform.localRotation = localRotation;
+      obj2.transform.localScale = localScale;
+    }
+
+    if (grab) {
+      ItemIdentifier heldObject = FistControl.Instance.heldObject;
+      if (heldObject == null) {
+        FistControl.Instance.currentPunch.ResetHeldState();
+        FistControl.Instance.currentPunch.ForceHold(itemIdentifier);
+        return itemIdentifier.gameObject;
+      }
+      switch (heldObject.itemType) {
+        case ItemType.None: 
+        case ItemType.Readable: 
+        case ItemType.Soap: 
+        case ItemType.Breakable: 
+          Object.Destroy(FistControl.Instance.heldObject.gameObject);
+          FistControl.Instance.currentPunch.ResetHeldState();
+          FistControl.Instance.currentPunch.ForceHold(itemIdentifier);
+          break;
+        default:
+          FistControl.Instance.currentPunch.ResetHeldState();
+          FistControl.Instance.currentPunch.ForceHold(itemIdentifier);
+          FistControl.Instance.currentPunch.ForceDrop();
+          FistControl.Instance.currentPunch.ResetHeldState();
+          FistControl.Instance.currentPunch.ForceHold(heldObject);
+          break;
+      }
+    }
+
+    return itemIdentifier.gameObject;
+  }
+
   public void NewUpdate() {
     if (GameStateManager.Instance.PlayerInputLocked || InputManager.Instance.PerformingCheatMenuCombo()) {
       return;

@@ -22,6 +22,7 @@ public class Plugin : BaseUnityPlugin {
   public static GameObject fishingRod;
   public static GameObject fishingCanvas;
   public static GameObject baitConsumedSound;
+  public static GameObject terminal;
 
   private void Awake() {
     gameObject.hideFlags = HideFlags.HideAndDontSave;
@@ -58,6 +59,8 @@ public class Plugin : BaseUnityPlugin {
     if (bundle != null) {
       WeaponIcon rodIcon = fishingRod.AddComponent<WeaponIcon>();
       rodIcon.weaponDescriptor = Plugin.bundle.LoadAsset<WeaponDescriptor>("assets/bundles/fishingstuff/rod descriptor.asset");
+
+      terminal = Plugin.bundle.LoadAsset<GameObject>("assets/bundles/fishingstuff/fishing enc terminal.prefab");
     }
   }
 }
@@ -140,6 +143,17 @@ public static class Patches {
     if (__instance is NewFishingRod) {
       NewFishingRod newRod = (NewFishingRod)__instance;
       newRod.NewUpdate();
+      return false;
+    }
+    return true;
+  }
+
+  [HarmonyPrefix]
+  [HarmonyPatch(typeof(FishingRodWeapon), "FishCaughtAndGrabbed")]
+  private static bool FishingRodWeapon_FishCaughtAndGrabbed_Prefix(FishingRodWeapon __instance) {
+    if (__instance is NewFishingRod) {
+      NewFishingRod newRod = (NewFishingRod)__instance;
+      newRod.FishCaughtAndGrabbed();
       return false;
     }
     return true;
@@ -231,11 +245,10 @@ public static class Patches {
 
     if (!(scene.Contains("Level") || scene.Contains("construct") || scene.Contains("Museum"))) return;
 
-    GameObject terminal = Plugin.bundle.LoadAsset<GameObject>("assets/bundles/fishingstuff/fishing enc terminal.prefab");
     GameObject terminalClone;
 
     if (scene.Contains("construct")) {
-      terminalClone = Object.Instantiate(terminal);
+      terminalClone = Object.Instantiate(Plugin.terminal);
       terminalClone.transform.position = new Vector3(-37, -10, 335.125f);
       terminalClone.transform.localEulerAngles = new Vector3(0, 0, 180);
       return;
@@ -256,7 +269,7 @@ public static class Patches {
       return;
     }
 
-    terminalClone = Object.Instantiate(terminal, firstRoom.transform.GetChild(0));
+    terminalClone = Object.Instantiate(Plugin.terminal, firstRoom.transform.GetChild(0));
     terminalClone.transform.localPosition = new Vector3(-6.5f, 2, 32);
     terminalClone.transform.localEulerAngles = Vector3.zero;
   }
