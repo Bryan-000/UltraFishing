@@ -83,10 +83,15 @@ public static class GenericHelper {
   }
 
   public static string GetSteamName() {
-    if (SteamClient.IsLoggedOn) {
-      return SteamClient.Name;
+    try {
+      if (SteamClient.IsLoggedOn) {
+        return SteamClient.Name;
+      }
+      else {
+        return "V1";
+      }
     }
-    else {
+    catch (Exception) {
       return "V1";
     }
   }

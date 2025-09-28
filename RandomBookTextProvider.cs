@@ -47,7 +47,7 @@ My contributions include:
 
 COOL PEOPLE ON DISCORD - advice, feedback and suggestions
 
-Poot Man - playtesting
+POOT MAN - playtesting
 
 PITR - really robust fishing code that was surprisingly easy to work with
 
@@ -471,6 +471,8 @@ Did you hear about the machine who tried to pump their <b>PUMP CHARGE SHOTGUN</b
 
 
 "why didnt this hotfix add a boulder for sisyphus? he's a boulder guy right? he's the guy with the boulder? why doesnt he have a boulder? i thought his whole thing was that he's a boulder. i was hoping to fight boulder feat sisyphus.... where's the boulder?"
+
+"i dont think gravity falls, i dont think it has the ability to do that"
 """",
   };
 }

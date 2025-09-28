@@ -546,7 +546,7 @@ public static class Patches {
         WaterBuilder.SetWater("Pond/Pond Underwater")
           .AddFish("Koi Fish")
           .SetUp("Pond", Color.white);
-        WaterBuilder.SetWater("Pit/PitDestroyer") //find a way to raise safely
+        WaterBuilder.SetWater("Pit/PitDestroyer") 
           .AddFish("Wise Fish")
           .SetUp("Depths Of The Library", Color.gray);
         WaterBuilder.SetWater("Curved Pit Destroyer")

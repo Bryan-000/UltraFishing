@@ -1,0 +1,9 @@
+{
+    "name": "UltraFishing",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/earthlingOnFire/UltraFishing",
+    "description": "Adds a permanent fishing rod to your arsenal and new fishes to discover!",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2100"
+    ]
+}
