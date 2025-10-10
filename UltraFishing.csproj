@@ -30,6 +30,9 @@
     <Reference Include="TMPro">
       <HintPath>lib\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ULTRAKILL\ULTRAKILL_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.ResourceManagement">
       <HintPath>lib\Unity.ResourceManager.dll</HintPath>
     </Reference>
@@ -37,7 +40,7 @@
       <HintPath>lib\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Steamworks">
-      <HintPath>lib\Facepunch.Steamworks.Win64.dll</HintPath >
+      <HintPath>lib\Facepunch.Steamworks.Win64.dll</HintPath>
     </Reference>
   </ItemGroup>
 
