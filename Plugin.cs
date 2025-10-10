@@ -427,7 +427,7 @@ public static class Patches {
           .AddFish("Shark")
           .SetUp("Aquarium", Color.cyan);
         WaterBuilder.SetWater("__Room_Courtyard/__Level Geo/Water Fountain/Water fountain_water_1")
-          .AddFish("Coin")
+          .AddFish("Mannequin Fish")
           .SetUp("Fountain", Color.cyan);
         WaterBuilder.SetWater("__Room_FrontDesk_1/__Level geo/Cube (3)")
           .AddFish("Wise Fish")

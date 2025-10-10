@@ -40,6 +40,7 @@ public static class GlobalFishManager {
       "assets/bundles/fishingstuff/fishes/coin fish.asset", // Coin
       "assets/bundles/fishingstuff/fishes/book fish.asset", // Wise Fish
       "assets/bundles/fishingstuff/fishes/png fish.asset", // "size 2"
+      "assets/bundles/fishingstuff/fishes/mannequin fish.asset", // Mannequin Fish
     };
 
     fishes = new FishObject[defaultFishes.Length + customFishes.Length];
@@ -68,11 +69,6 @@ public static class GlobalFishManager {
 
   private static FishObject PrepareFish(FishObject fish) {
     switch (fish.fishName) {
-      case "Filthy Screaming Fish (Filsh)":
-        var src = fish.customPickup.gameObject.transform.GetChild(0).GetComponent<AudioSource>();
-        var goreAudio = Addressables.LoadAssetAsync<AudioMixer>("GoreAudio").WaitForCompletion();
-        src.outputAudioMixerGroup.audioMixer.outputAudioMixerGroup = goreAudio.FindMatchingGroups("Master").FirstOrDefault();;
-        break;
       case "Wise Fish":
         fish.customPickup.gameObject.AddComponent<BookRandomizer>();
         break;
