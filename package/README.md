@@ -15,3 +15,4 @@
 # Credits
 - Cool people on discord - advice, feedback and suggestions
 - Poot Man - playtesting
+- Draghtnim - melted the fish in higher detail

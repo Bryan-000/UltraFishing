@@ -49,6 +49,8 @@ COOL PEOPLE ON DISCORD - advice, feedback and suggestions
 
 POOT MAN - playtesting
 
+DRAGHTNIM - melted the fish in higher detail
+
 PITR - really robust fishing code that was surprisingly easy to work with
 
 HAKITA - cool game i guess

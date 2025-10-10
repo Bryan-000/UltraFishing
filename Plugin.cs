@@ -29,136 +29,105 @@ public class Plugin : BaseUnityPlugin {
   public static GameObject terminal;
   private static Shader MainShader;
 
-    private void Awake() {
-        MainShader = Fetch<Shader>("Assets/Shaders/MasterShader/ULTRAKILL-Standard.shader");
+  private void Awake() {
+    Plugin.MainShader = Fetch<Shader>("Assets/Shaders/MasterShader/ULTRAKILL-Standard.shader");
 
-        gameObject.hideFlags = HideFlags.HideAndDontSave;
+    gameObject.hideFlags = HideFlags.HideAndDontSave;
     Plugin.logger = Logger;
   }
 
-    public static Type Fetch<Type>(string name)
-    {
-        //IL_0001: Unknown result type (might be due to invalid IL or missing references)
-        //IL_0006: Unknown result type (might be due to invalid IL or missing references)
-        return Addressables.LoadAssetAsync<Type>((object)name).WaitForCompletion();
+  public static Type Fetch<Type>(string name) {
+    return Addressables.LoadAssetAsync<Type>((object)name).WaitForCompletion();
+  }
+
+  public static void ReplaceShader(Material mat, Shader shader) {
+    if ((UnityEngine.Object)(object)mat == (UnityEngine.Object)null || (UnityEngine.Object)(object)mat.shader == (UnityEngine.Object)null) {
+      return;
     }
-
-    public static void ReplaceShader(Material mat, Shader shader)
-    {
-
-        if ((UnityEngine.Object)(object)mat == (UnityEngine.Object)null || (UnityEngine.Object)(object)mat.shader == (UnityEngine.Object)null)
-        {
-            return;
-        }
-        int renderQueue = mat.renderQueue;
-        Shader shader2 = mat.shader;
-        if ((UnityEngine.Object)(object)Shader.Find(((UnityEngine.Object)shader2).name) != (UnityEngine.Object)null)
-        {
-            if (((UnityEngine.Object)mat.shader).name != "Standard")
-            {
-                mat.shader = Shader.Find(((UnityEngine.Object)shader2).name);
-            }
-            else
-            {
-                mat.shader = shader;
-            }
-            mat.renderQueue = renderQueue;
-        }
-        else if (((UnityEngine.Object)shader2).name == ((UnityEngine.Object)shader).name)
-        {
-            mat.shader = shader;
-            mat.renderQueue = renderQueue;
-        }
-        else
-        {
-            mat.renderQueue = renderQueue;
-        }
+    int renderQueue = mat.renderQueue;
+    Shader shader2 = mat.shader;
+    if ((UnityEngine.Object)(object)Shader.Find(((UnityEngine.Object)shader2).name) != (UnityEngine.Object)null) {
+      if (((UnityEngine.Object)mat.shader).name != "Standard") {
+        mat.shader = Shader.Find(((UnityEngine.Object)shader2).name);
+      }
+      else {
+        mat.shader = shader;
+      }
+      mat.renderQueue = renderQueue;
     }
-
-    public static void ReplaceAssets()
-    {
-
-        List<Material> list = new List<Material>();
-        Dictionary<string, AudioMixer> dictionary = new Dictionary<string, AudioMixer>();
-        dictionary["AllAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"AllAudio").WaitForCompletion();
-        dictionary["DoorAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"DoorAudio").WaitForCompletion();
-        dictionary["GoreAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"GoreAudio").WaitForCompletion();
-        dictionary["MusicAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"MusicAudio").WaitForCompletion();
-        dictionary["UnfreezeableAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"UnfreezeableAudio").WaitForCompletion();
-        GameObject[] array = bundle.LoadAllAssets<GameObject>();
-        Material[] sharedMaterials;
-        foreach (GameObject val in array)
-        {
-            if (val.GetComponentsInChildren<AudioSource>(true) != null)
-            {
-                AudioSource[] componentsInChildren = val.GetComponentsInChildren<AudioSource>(true);
-                foreach (AudioSource val2 in componentsInChildren)
-                {
-                    if ((UnityEngine.Object)(object)val2.outputAudioMixerGroup != (UnityEngine.Object)null && dictionary.TryGetValue(((UnityEngine.Object)val2.outputAudioMixerGroup.audioMixer).name, out var value))
-                    {
-                        val2.outputAudioMixerGroup.audioMixer.outputAudioMixerGroup = value.FindMatchingGroups("Master").FirstOrDefault();
-                    }
-                }
-            }
-
-            //study this
-            if (val.GetComponentsInChildren<Renderer>(true) != null)
-            {
-                Renderer[] componentsInChildren2 = val.GetComponentsInChildren<Renderer>(true);
-                foreach (Renderer val3 in componentsInChildren2)
-                {
-                    if ((UnityEngine.Object)(object)val3.sharedMaterial != (UnityEngine.Object)null)
-                    {
-                        ReplaceShader(val3.sharedMaterial, MainShader);
-                    }
-                    if (val3.sharedMaterials != null && val3.sharedMaterials.Length != 0)
-                    {
-                        sharedMaterials = val3.sharedMaterials;
-                        foreach (Material val4 in sharedMaterials)
-                        {
-                            list.Add(val4);
-                            ReplaceShader(val4, MainShader);
-                        }
-                    }
-                }
-            }
-            if (val.GetComponentsInChildren<ParticleSystemRenderer>(true) == null)
-            {
-                continue;
-            }
-            ParticleSystemRenderer[] componentsInChildren3 = val.GetComponentsInChildren<ParticleSystemRenderer>(true);
-            foreach (ParticleSystemRenderer val5 in componentsInChildren3)
-            {
-                if ((UnityEngine.Object)(object)((Renderer)val5).sharedMaterial != (UnityEngine.Object)null)
-                {
-                    ReplaceShader(((Renderer)val5).sharedMaterial, MainShader);
-                }
-                if (((Renderer)val5).sharedMaterials != null && ((Renderer)val5).sharedMaterials.Length != 0)
-                {
-                    sharedMaterials = ((Renderer)val5).sharedMaterials;
-                    foreach (Material val6 in sharedMaterials)
-                    {
-                        list.Add(val6);
-                        ReplaceShader(val6, MainShader);
-                    }
-                }
-            }
-        }
-        sharedMaterials = bundle.LoadAllAssets<Material>();
-        foreach (Material val7 in sharedMaterials)
-        {
-            if (!list.Contains(val7))
-            {
-                list.Add(val7);
-                ReplaceShader(val7, MainShader);
-            }
-        }
-
-
-
+    else if (((UnityEngine.Object)shader2).name == ((UnityEngine.Object)shader).name) {
+      mat.shader = shader;
+      mat.renderQueue = renderQueue;
     }
+    else {
+      mat.renderQueue = renderQueue;
+    }
+  }
 
-    private void Start() {
+  public static void ReplaceAssets() {
+
+    List<Material> list = new List<Material>();
+    Dictionary<string, AudioMixer> dictionary = new Dictionary<string, AudioMixer>();
+    dictionary["AllAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"AllAudio").WaitForCompletion();
+    dictionary["DoorAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"DoorAudio").WaitForCompletion();
+    dictionary["GoreAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"GoreAudio").WaitForCompletion();
+    dictionary["MusicAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"MusicAudio").WaitForCompletion();
+    dictionary["UnfreezeableAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"UnfreezeableAudio").WaitForCompletion();
+    GameObject[] array = bundle.LoadAllAssets<GameObject>();
+    Material[] sharedMaterials;
+    foreach (GameObject val in array) {
+      if (val.GetComponentsInChildren<AudioSource>(true) != null) {
+        AudioSource[] componentsInChildren = val.GetComponentsInChildren<AudioSource>(true);
+        foreach (AudioSource val2 in componentsInChildren) {
+          if ((UnityEngine.Object)(object)val2.outputAudioMixerGroup != (UnityEngine.Object)null && dictionary.TryGetValue(((UnityEngine.Object)val2.outputAudioMixerGroup.audioMixer).name, out var value)) {
+            val2.outputAudioMixerGroup.audioMixer.outputAudioMixerGroup = value.FindMatchingGroups("Master").FirstOrDefault();
+          }
+        }
+      }
+
+      //study this
+      if (val.GetComponentsInChildren<Renderer>(true) != null) {
+        Renderer[] componentsInChildren2 = val.GetComponentsInChildren<Renderer>(true);
+        foreach (Renderer val3 in componentsInChildren2) {
+          if ((UnityEngine.Object)(object)val3.sharedMaterial != (UnityEngine.Object)null) {
+            ReplaceShader(val3.sharedMaterial, MainShader);
+          }
+          if (val3.sharedMaterials != null && val3.sharedMaterials.Length != 0) {
+            sharedMaterials = val3.sharedMaterials;
+            foreach (Material val4 in sharedMaterials) {
+              list.Add(val4);
+              ReplaceShader(val4, MainShader);
+            }
+          }
+        }
+      }
+      if (val.GetComponentsInChildren<ParticleSystemRenderer>(true) == null) {
+        continue;
+      }
+      ParticleSystemRenderer[] componentsInChildren3 = val.GetComponentsInChildren<ParticleSystemRenderer>(true);
+      foreach (ParticleSystemRenderer val5 in componentsInChildren3) {
+        if ((UnityEngine.Object)(object)((Renderer)val5).sharedMaterial != (UnityEngine.Object)null) {
+          ReplaceShader(((Renderer)val5).sharedMaterial, MainShader);
+        }
+        if (((Renderer)val5).sharedMaterials != null && ((Renderer)val5).sharedMaterials.Length != 0) {
+          sharedMaterials = ((Renderer)val5).sharedMaterials;
+          foreach (Material val6 in sharedMaterials) {
+            list.Add(val6);
+            ReplaceShader(val6, MainShader);
+          }
+        }
+      }
+    }
+    sharedMaterials = bundle.LoadAllAssets<Material>();
+    foreach (Material val7 in sharedMaterials) {
+      if (!list.Contains(val7)) {
+        list.Add(val7);
+        ReplaceShader(val7, MainShader);
+      }
+    }
+  }
+
+  private void Start() {
     string modPath = Assembly.GetExecutingAssembly().Location.ToString();
     modDir = Path.GetDirectoryName(modPath);
 
@@ -182,14 +151,14 @@ public class Plugin : BaseUnityPlugin {
 
   private void LoadAssets() {
 
-        if (linked == false) {
+    if (linked == false) {
 
-            ReplaceAssets();
-            linked = true;
+      ReplaceAssets();
+      linked = true;
 
-        }
+    }
 
-        fishingCanvas = AssetHelper.LoadPrefab("Assets/Prefabs/UI/FishingCanvas.prefab");
+    fishingCanvas = AssetHelper.LoadPrefab("Assets/Prefabs/UI/FishingCanvas.prefab");
     fishingRod = AssetHelper.LoadPrefab("Assets/Prefabs/Fishing/Fishing Rod Weapon.prefab");
     baitConsumedSound = AssetHelper.LoadPrefab("Assets/Particles/SoundBubbles/Bait Consumed Sound.prefab");
 
