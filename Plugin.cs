@@ -514,8 +514,17 @@ public static class Patches {
         /*  .SetUp("", Color.magenta);*/
       break;
       case "Level 3-1":
-      WaterBuilder.SetWater("5 - Circular Arena/5 Nonstuff/Water/")
+                WaterBuilder.SetWater("2 - Tallway/2 Nonstuff/Floor/Water/")
         .AddFish("Eyeball")
+        .SetUp("Blood", Color.red);
+                WaterBuilder.SetWater("7 - Bridge Arena/7 Nonstuff/Water/")
+        .AddFish("Eyeball")
+        .SetUp("Blood", Color.red);
+                // needs work
+        WaterBuilder.SetWater("7 - Bridge Arena/7 Nonstuff/Water (1)/")
+        .AddFish("Eyeball")
+        .SetUp("Blood", Color.red);
+        WaterBuilder.SetWater("5 - Circular Arena/5 Nonstuff/Water/")
         .AddFish("Frog (?)")
         .SetUp("Blood", Color.red);
         WaterBuilder.SetWater("3 - Big Arena/3 Nonstuff/Floor/Acid/")
