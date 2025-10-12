@@ -41,6 +41,10 @@ public static class GlobalFishManager {
       "assets/bundles/fishingstuff/fishes/book fish.asset", // Wise Fish
       "assets/bundles/fishingstuff/fishes/png fish.asset", // "size 2"
       "assets/bundles/fishingstuff/fishes/mannequin fish.asset", // Mannequin Fish
+      "assets/bundles/fishingstuff/fishes/nil fish.asset", // Nil
+      "assets/bundles/fishingstuff/fishes/nan fish.asset", // NaN
+      "assets/bundles/fishingstuff/fishes/ancient fish.asset", // Ancient Fish
+      "assets/bundles/fishingstuff/fishes/tasty fish.asset", // Tasty Fish
     };
 
     fishes = new FishObject[defaultFishes.Length + customFishes.Length];

@@ -10,6 +10,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 namespace UltraFishing;
@@ -73,7 +74,17 @@ public class Plugin : BaseUnityPlugin {
     dictionary["GoreAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"GoreAudio").WaitForCompletion();
     dictionary["MusicAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"MusicAudio").WaitForCompletion();
     dictionary["UnfreezeableAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"UnfreezeableAudio").WaitForCompletion();
+    
     GameObject[] array = bundle.LoadAllAssets<GameObject>();
+
+    FishObject[] customFishes = bundle.LoadAllAssets<FishObject>();
+    for (int i = 0; i < array.Length; i++) {
+      array.Append(customFishes[i].worldObject);
+      if (customFishes[i].customPickup != null) {
+        array.Append(customFishes[i].customPickup.gameObject);
+      }
+    }
+    
     Material[] sharedMaterials;
     foreach (GameObject val in array) {
       if (val.GetComponentsInChildren<AudioSource>(true) != null) {
@@ -150,12 +161,9 @@ public class Plugin : BaseUnityPlugin {
   }
 
   private void LoadAssets() {
-
     if (linked == false) {
-
       ReplaceAssets();
       linked = true;
-
     }
 
     fishingCanvas = AssetHelper.LoadPrefab("Assets/Prefabs/UI/FishingCanvas.prefab");
@@ -427,7 +435,7 @@ public static class Patches {
           .AddFish("Shark")
           .SetUp("Aquarium", Color.cyan);
         WaterBuilder.SetWater("__Room_Courtyard/__Level Geo/Water Fountain/Water fountain_water_1")
-          .AddFish("Mannequin Fish")
+          .AddFish("Coin")
           .SetUp("Fountain", Color.cyan);
         WaterBuilder.SetWater("__Room_FrontDesk_1/__Level geo/Cube (3)")
           .AddFish("Wise Fish")
@@ -514,19 +522,19 @@ public static class Patches {
         /*  .SetUp("", Color.magenta);*/
       break;
       case "Level 3-1":
-                WaterBuilder.SetWater("2 - Tallway/2 Nonstuff/Floor/Water/")
-        .AddFish("Eyeball")
-        .SetUp("Blood", Color.red);
-                WaterBuilder.SetWater("7 - Bridge Arena/7 Nonstuff/Water/")
-        .AddFish("Eyeball")
-        .SetUp("Blood", Color.red);
-                // needs work
+        WaterBuilder.SetWater("2 - Tallway/2 Nonstuff/Floor/Water/")
+          .AddFish("Eyeball")
+          .SetUp("Blood", Color.red);
+        WaterBuilder.SetWater("7 - Bridge Arena/7 Nonstuff/Water/")
+          .AddFish("Eyeball")
+          .SetUp("Blood", Color.red);
+        // needs work
         WaterBuilder.SetWater("7 - Bridge Arena/7 Nonstuff/Water (1)/")
-        .AddFish("Eyeball")
-        .SetUp("Blood", Color.red);
+          .AddFish("Eyeball")
+          .SetUp("Blood", Color.red);
         WaterBuilder.SetWater("5 - Circular Arena/5 Nonstuff/Water/")
-        .AddFish("Frog (?)")
-        .SetUp("Blood", Color.red);
+          .AddFish("Frog (?)")
+          .SetUp("Blood", Color.red);
         WaterBuilder.SetWater("3 - Big Arena/3 Nonstuff/Floor/Acid/")
           .AddFish("Melted Fish")
           .SetUp("Acid", Color.green);
