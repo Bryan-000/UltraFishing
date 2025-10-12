@@ -12,6 +12,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Collections;
 
 namespace UltraFishing;
 
@@ -75,18 +76,18 @@ public class Plugin : BaseUnityPlugin {
     dictionary["MusicAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"MusicAudio").WaitForCompletion();
     dictionary["UnfreezeableAudio"] = Addressables.LoadAssetAsync<AudioMixer>((object)"UnfreezeableAudio").WaitForCompletion();
     
-    GameObject[] array = bundle.LoadAllAssets<GameObject>();
+    List<GameObject> gameObjects = bundle.LoadAllAssets<GameObject>().ToList();
 
     FishObject[] customFishes = bundle.LoadAllAssets<FishObject>();
-    for (int i = 0; i < array.Length; i++) {
-      array.Append(customFishes[i].worldObject);
+    for (int i = 0; i < customFishes.Length; i++) {
+      gameObjects.Add(customFishes[i].worldObject);
       if (customFishes[i].customPickup != null) {
-        array.Append(customFishes[i].customPickup.gameObject);
+        gameObjects.Add(customFishes[i].customPickup.gameObject);
       }
     }
     
     Material[] sharedMaterials;
-    foreach (GameObject val in array) {
+    foreach (GameObject val in gameObjects) {
       if (val.GetComponentsInChildren<AudioSource>(true) != null) {
         AudioSource[] componentsInChildren = val.GetComponentsInChildren<AudioSource>(true);
         foreach (AudioSource val2 in componentsInChildren) {
