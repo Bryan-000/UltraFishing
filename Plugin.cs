@@ -13,6 +13,8 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections;
+using System.Text.RegularExpressions;
+using UnityEngine.XR;
 
 namespace UltraFishing;
 
@@ -641,14 +643,38 @@ public static class Patches {
             .SetUp("Sand", Color.yellow);
         }
         break;
-      case "Level 4-3":
+            case "Level 4-1":
+
+
+                foreach (Transform objects in GenericHelper.FindGameObject("6 - Staircase Arena/6 Nonstuff/Pit/Lava/").transform)
+                {
+                    WaterBuilder.SetWater(objects.gameObject)
+                      .AddFish("Overcooked Fish")
+                      .SetUp("Lava", Color.red);
+                }
+                foreach (Transform objects in GenericHelper.FindGameObject("Exterior Areas/1 Nonstuff/Water/").transform)
+                {
+                    WaterBuilder.SetWater(objects.gameObject)
+                      .AddFish("Ancient Fish")
+                      .SetUp("Pond", Color.cyan);
+                }
+                break;
+
+            case "Level 4-3":
         WaterBuilder.SetWater("3 - Traitor Hallway/3B - Tomb of Kings/3B Nonstuff/Entrance/Walls/Cube (99)")
           .AddFish("Coin")
           .SetUp("Gold", Color.yellow);
         WaterBuilder.SetWater("3 - Traitor Hallway/3B - Tomb of Kings/3B Nonstuff/Entrance/Walls/Cube (100)")
           .AddFish("Coin")
           .SetUp("Gold", Color.yellow);
-        break;
+
+                foreach (Transform objects in GenericHelper.FindGameObject("5 - Cerberus Room/5 Nonstuff/Water/").transform)
+                {
+                    WaterBuilder.SetWater(objects.gameObject)
+                      .AddFish("Ancient Fish")
+                      .SetUp("Pond", Color.cyan);
+                }
+                break;
       case "Level 4-4":
         WaterBuilder.CreateWater("8 - Outro/8 Stuff/Landing (Broken) (1)")
           .SetPosition(1065, 255, 692)
@@ -658,7 +684,26 @@ public static class Patches {
         WaterBuilder.SetWater("8 - Outro/8 Nonstuff/Untilted (Outro)/Cube(Clone) (1)/")
           .AddFish("Coin")
           .SetUp("Sand", Color.yellow);
-        break;
+                foreach (Transform objects in GenericHelper.FindGameObject("3 - Ground Floor/Hallway/Sands/").transform)
+                {
+                    WaterBuilder.SetWater(objects.gameObject)
+                  .AddFish("Coin")
+                    .SetUp("Sand", Color.yellow);
+                }
+                WaterBuilder.SetWater("3 - Ground Floor/Sand Hall/Sand/")
+                        .AddFish("Coin")
+                .SetUp("Sand", Color.yellow);
+
+                WaterBuilder.SetWater(GenericHelper.FindGameObject("5 - Window Hallway/Floor/").transform.GetChild(5).gameObject)
+              .AddFish("Ancient Fish")
+              .SetUp("Pond", Color.cyan);
+                WaterBuilder.SetWater(GenericHelper.FindGameObject("5 - Window Hallway/Floor/").transform.GetChild(6).gameObject)
+              .AddFish("Ancient Fish")
+              .SetUp("Pond", Color.cyan);
+                WaterBuilder.SetWater(GenericHelper.FindGameObject("3 - Ground Floor/Secret Hall/SuperSecretActivator/"))
+            .AddFish("Ancient Fish")
+            .SetUp("Pond", Color.cyan);
+                break;
       case "Level 5-1":
         WaterBuilder.SetWater("Underwaters/All Waters/Cube (3)")
           .AddFish("Funny Stupid Fish (Friend)")
