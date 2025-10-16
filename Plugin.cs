@@ -32,6 +32,7 @@ public class Plugin : BaseUnityPlugin {
   public static GameObject baitConsumedSound;
   public static GameObject terminal;
   private static Shader MainShader;
+  public static readonly string[] NoRodLevels = [ "Level 1-S" ];
 
   private void Awake() {
     Plugin.MainShader = Fetch<Shader>("Assets/Shaders/MasterShader/ULTRAKILL-Standard.shader");
@@ -188,7 +189,7 @@ public static class Patches {
   [HarmonyPostfix]
   [HarmonyPatch(typeof(GunControl), "Start")]
   private static void GunControl_Start_Postfix() {
-    if (Object.FindObjectOfType<FishingHUD>() != null) return;
+    if (Object.FindObjectOfType<FishingHUD>() != null || Plugin.NoRodLevels.Contains(SceneHelper.CurrentScene)) return;
 
     GameObject fishManagerObj = new GameObject("FishManager");
     fishManagerObj.SetActive(value: false);
